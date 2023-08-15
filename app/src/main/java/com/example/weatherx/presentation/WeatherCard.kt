@@ -19,9 +19,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weatherx.R
-import com.example.weatherx.domain.weather.WeatherData
 import com.example.weatherx.presentation.ui.theme.TemperatureCard
 import java.time.format.DateTimeFormatter
 
@@ -71,7 +69,7 @@ fun WeatherCard(
         Spacer(modifier = Modifier.height(80.dp))
         TemperatureCard(state = state, modifier = Modifier)
         Spacer(modifier = Modifier.height(80.dp))
-        WeatherHourly(weatherData = data)
+        HourlyDisplay(state = state)
 
 
     }
