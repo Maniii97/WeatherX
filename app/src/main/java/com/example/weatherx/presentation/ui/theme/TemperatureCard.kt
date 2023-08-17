@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherx.R
+import com.example.weatherx.domain.weather.WeatherData
 import com.example.weatherx.presentation.WeatherState
 
 @Composable
@@ -33,41 +34,55 @@ fun TemperatureCard(
 
     ) {
     state.weatherInfo?.currentWeatherData?.let { data ->
+
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
             ) {
+            val temp = data.temperatureCelsius
+            val humidity = data.humidity
+            val bg = if (temp >= 30.0) {
+                RedBg
+            }else{
+                WhiteBg
+            }
+            val Hbg = if (humidity > 90){
+                RedBg}
+            else {Color(0XFF26282b)}
+
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(180.dp)
-                    .background(Color(0xFFedeff2)),
+                    .background(bg),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "${data.temperatureCelsius}°C",
+                    text = "${temp}°C",
                     fontSize = 40.sp,
                     fontFamily = FontFamily(Font(R.font.sfpro_medium)),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = if(bg == RedBg){ Color.White }
+                    else { Color.Black }
                 )
             }
             Spacer(modifier = Modifier.width(20.dp))
 
-            Column() {
+            Column {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(40.dp))
                         .height(80.dp)
                         .width(200.dp)
-                        .background(Color(0XFF26282b)),
+                        .background(Hbg),
                     contentAlignment = Alignment.Center
                 ){
-                    Text(text = "Humidity  ${data.humidity} %",
-                        fontSize = 20.sp,
+                    Text(text = "Humidity  $humidity %",
+                        fontSize = 17.sp,
                         fontFamily = FontFamily(Font(R.font.sfpro_medium)),
-                        color = Color.White
+                        color = Color.White,
                     )
 
                 }
@@ -82,14 +97,13 @@ fun TemperatureCard(
                     contentAlignment = Alignment.Center
                 ){
                     Text(text = "Wind Speed \n ${data.windSpeed} km/h",
-                        fontSize = 20.sp,
+                        fontSize = 17.sp,
                         fontFamily = FontFamily(Font(R.font.sfpro_medium)),
                         color = Color.White,
 
                     )
 
                 }
-
 
             }
         }

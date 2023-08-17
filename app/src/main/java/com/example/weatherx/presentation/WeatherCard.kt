@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -31,7 +33,6 @@ fun WeatherCard(
 ) {
     state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
-            shape = RoundedCornerShape(10.dp),
             modifier = modifier.padding(28.dp),
             backgroundColor = backgroundColor
         ) {
@@ -41,7 +42,7 @@ fun WeatherCard(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(25.dp))
                 Text(
                     text = "Refreshed at ${
                         data.time.format(
@@ -66,10 +67,14 @@ fun WeatherCard(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(80.dp))
-        TemperatureCard(state = state, modifier = Modifier)
-        Spacer(modifier = Modifier.height(80.dp))
-        HourlyDisplay(state = state)
+        Spacer(modifier = Modifier.height(55.dp))
+        LazyColumn(modifier = Modifier.padding(16.dp)) {
+            items(1) {
+                TemperatureCard(state = state, modifier = Modifier)
+                Spacer(modifier = Modifier.height(20.dp))
+                HourlyDisplay(state = state)
+            }
+        }
 
 
     }
