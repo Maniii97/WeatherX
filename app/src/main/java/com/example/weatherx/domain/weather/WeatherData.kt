@@ -12,3 +12,4 @@ data class WeatherData(
     val weatherType: WeatherType,
     val visibility : Double
 )
+
